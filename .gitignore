@@ -7,3 +7,8 @@
 # PyCharm
 __pycache__/
 .idea/
+
+# Large Files
+chicago_crashes.csv
+chicago_vehicles.csv
+chicago_people.csv
