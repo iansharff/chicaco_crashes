@@ -51,7 +51,7 @@ def main():
     environment_dict = dict.fromkeys(environment, "ENVIRONMENT")
 
     binned = {**driving_dict, **disregarding_signs_dict, **environment_dict}
-    with open('binned_causes.pkl', 'wb') as f:
+    with open('data/binned_causes.pkl', 'wb') as f:
         pickle.dump(binned, f)
 
 
