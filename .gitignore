@@ -1,0 +1,9 @@
+# JupyterLab
+.ipynb_checkpoints/
+
+# Finder
+.DS_Store
+
+# PyCharm
+__pycache__/
+.idea/
