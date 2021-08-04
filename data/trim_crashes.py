@@ -48,7 +48,7 @@ def main():
 
     # Change CRASH_DATE to CRASH_YEAR
     crashes['CRASH_DATE'] = crashes['CRASH_DATE'].map(lambda x: pd.to_datetime(x).year)
-    crashes.rename({'CRASH_DATE': 'CRASH_YEAR'})
+    crashes.rename({'CRASH_DATE': 'CRASH_YEAR'}, inplace=True)
 
     crashes_injuries = crashes[crashes.MOST_SEVERE_INJURY.isin([
         'NONINCAPACITATING INJURY',
