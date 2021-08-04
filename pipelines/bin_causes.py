@@ -39,8 +39,11 @@ def main():
         'VISION OBSCURED (SIGNS, TREE LIMBS, BUILDINGS, ETC.)',
         'DISTRACTION - FROM OUTSIDE VEHICLE',
         'ROAD ENGINEERING/SURFACE/MARKING DEFECTS',
-        'ROAD CONSTRUCTION/MAINTENENCE',
+        'ROAD CONSTRUCTION/MAINTENANCE',
         'EVASIVE ACTION DUE TO ANIMAL, OBJECT, NONMOTORIST',
+        'RELATED TO BUS STOP',
+        'BICYCLE ADVANCING LEGALLY ON RED LIGHT',
+        'MOTORCYCLE ADVANCING LEGALLY ON RED LIGHT',
         'ANIMAL',
         'OBSTRUCTED CROSSWALKS',
         'EQUIPMENT - VEHICLE CONDITION'
@@ -49,10 +52,9 @@ def main():
     driving_dict = dict.fromkeys(driving, "DRIVER")
     disregarding_signs_dict = dict.fromkeys(disregarding_signs, "DISREGARDING_SIGNS")
     environment_dict = dict.fromkeys(environment, "ENVIRONMENT")
-
-    binned = {**driving_dict, **disregarding_signs_dict, **environment_dict}
-    with open('data/binned_causes.pkl', 'wb') as f:
-        pickle.dump(binned, f)
+    binned_causes = {**driving_dict, **disregarding_signs_dict, **environment_dict}
+    with open('binned_causes.pkl', 'wb') as f:
+        pickle.dump(binned_causes, f)
 
 
 if __name__ == '__main__':
