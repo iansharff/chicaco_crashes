@@ -43,26 +43,24 @@ def main():
                           false_values=['N']
                           ).drop(columns=CRASHES_DROP)
 
-    # Save only samples that have a clear primary contributory cause
-    crashes.dropna(subset=['PRIM_CONTRIBUTORY_CAUSE'], axis=0, inplace=True)
+    # Save only samples that have a clear primary contributory cause and coordinates
+    crashes.dropna(subset=['PRIM_CONTRIBUTORY_CAUSE', 'LATITUDE', 'LONGITUDE'], axis=0, inplace=True)
 
     # Change CRASH_DATE to CRASH_YEAR
     crashes['CRASH_DATE'] = crashes['CRASH_DATE'].map(lambda x: pd.to_datetime(x).year)
-    crashes.rename({'CRASH_DATE': 'CRASH_YEAR'}, inplace=True)
+    crashes.rename({'CRASH_DATE': 'CRASH_YEAR'}, axis=1, inplace=True)
 
     crashes_injuries = crashes[crashes.MOST_SEVERE_INJURY.isin([
         'NONINCAPACITATING INJURY',
         'INCAPACITATING INJURY',
         'FATAL'
     ])]
-    print(crashes.info())
 
     with open('crashes.pkl', 'wb') as c:
         pd.to_pickle(crashes, c)
 
     with open('crashes_injuries.pkl', 'wb') as ci:
         pd.to_pickle(crashes_injuries, ci)
-
 
 if __name__ == '__main__':
     main()
