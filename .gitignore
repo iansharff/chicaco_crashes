@@ -12,3 +12,6 @@ __pycache__/
 chicago_crashes.csv
 chicago_vehicles.csv
 chicago_people.csv
+
+# APIs
+.secrets/
