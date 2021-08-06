@@ -31,7 +31,7 @@ As previously mentioned, the data available for this study is immense. Roughly 5
   * Cost of related damage (`DAMAGE`)
   * Traffic control device and its condition (`TRAFFIC_CONTROL_DEVICE`, `DEVICE_CONDITION`)
 
-In total, the crashes dataset contains _49_ features, and the identifying key is 
+In total, the crashes dataset contains _49_ features, and the primary key that links the crashes dataset to the vehicles and people datasets is `CRASH_RECORD_ID`. Binary columns end in `_I` and each contain `'Y'`, `'N'`, or are missing values, i.e. `NaN` when using Pandas. In the subset of features used, it could be reasonably assumed that a missing value is equivalent to `'N'`, for instance, in the `HIT_AND_RUN_I`
 
 ## Data Preparation
 The data
