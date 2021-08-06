@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.base import clone
 
 # Global constants for confusion matrix design
 LABELS = ['DISREGARDING_SIGNS', 'DRIVER', 'ENVIRONMENT']
@@ -37,6 +38,7 @@ ANNOT_KWS = {
 
 class TrainTestSplit:
     """A train-test split class to be passed into ModelEvaluator"""
+
     def __init__(self, X, y, test_size=0.25, random_state=42):
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X,
                                                                                 y,
@@ -50,8 +52,17 @@ class ModelEvaluator:
     Model evaluation class, takes a TrainTestSplit object, a model (pipeline or stand-alone estimator), and a name
     as required parameters, random_state=42 by default
     """
-    def __init__(self, splits, model, model_name, random_state=42):
-        self._model = model
+
+    def __init__(self, splits, model, model_name, fitted=False, random_state=42):
+        """
+        :param splits: TestTrainSplit object
+        :param model: sklearn estimator or pipeline
+        :param model_name: str
+        :param random_state: int
+        :param fitted: bool
+            if True, then model must be fitted
+        """
+        self._model = model if not fitted else clone(model)
         self._model_name = model_name
         self._rng = np.random.RandomState(random_state)
 
@@ -62,8 +73,8 @@ class ModelEvaluator:
         self._y_test = splits.y_test
 
         # Fitting
-        self._fitted_model = None
-        self._is_fitted = False
+        self._fitted_model = model if fitted else None
+        self._is_fitted = fitted
 
         # Cross validation
         self._cv_scores = None
@@ -96,16 +107,19 @@ class ModelEvaluator:
 
         # Predict target values and assign to respective attributes
         if predict:
-            print("Predicting Target values...")
-            self._y_hat_train = self._fitted_model.predict(self._X_train)
-            self._y_hat_test = self._fitted_model.predict(self._X_test)
-            print(f"Target values predicted successfully")
-            self._values_predicted = True
+            self.predict()
+
+    def predict(self):
+        print("Predicting Target values...")
+        self._y_hat_train = self._fitted_model.predict(self._X_train)
+        self._y_hat_test = self._fitted_model.predict(self._X_test)
+        print(f"Target values predicted successfully")
+        self._values_predicted = True
 
     def train_test_classification_reports(self):
         """Print classification reports for train and test sets"""
         if not self._values_predicted:
-            print("Values have not been predicted: please")
+            self.predict()
         print('_' * 10 + 'TRAIN SCORES' + '_' * 10)
         print(classification_report(self._y_train, self._y_hat_train))
         print('-' * 30, end='\n\n')
@@ -164,3 +178,9 @@ class ModelEvaluator:
         """Store entire evaluator object as a PKL file"""
         with open(filepath, 'wb') as f:
             pickle.dump(self, f)
+
+    def __str__(self):
+        if self._is_fitted:
+            return self._model_name + ": FITTED\n\n" + str(self._fitted_model) + '\n'
+        else:
+            return self._model_name + ": NOT FITTED\n" + str(self._fitted_model) + '\n'
