@@ -3,16 +3,15 @@ import pickle
 
 def main():
     driving = [
-        'FAILING TO YIELD RIGHT-OF-WAY',
-        'FOLLOWING TOO CLOSELY',
-        'IMPROPER OVERTAKING/PASSING',
-        'FAILING TO REDUCE SPEED TO AVOID CRASH',
-        'IMPROPER BACKING',
-        'IMPROPER LANE USAGE',
-        'IMPROPER TURNING/NO SIGNAL',
-        'DRIVING SKILLS/KNOWLEDGE/EXPERIENCE',
-        'OPERATING VEHICLE IN ERRATIC, RECKLESS, CARELESS, NEGLIGENT OR AGGRESSIVE MANNER',
-        'DISTRACTION - FROM INSIDE VEHICLE',
+        'FAILING TO YIELD RIGHT-OF-WAY', # inattention to cars
+        'FOLLOWING TOO CLOSELY', # driver practices
+        'IMPROPER OVERTAKING/PASSING', # inattention to cars
+        'FAILING TO REDUCE SPEED TO AVOID CRASH', # inattention to cars
+        'IMPROPER BACKING', # inattention to cars
+        'IMPROPER LANE USAGE', # innatention to environment
+        'IMPROPER TURNING/NO SIGNAL', # driving practices
+        'DRIVING SKILLS/KNOWLEDGE/EXPERIENCE', # driving practices
+        'OPERATING VEHICLE IN ERRATIC, RECKLESS, CARELESS, NEGLIGENT OR AGGRESSIVE MANNER', # driving practices
         'PHYSICAL CONDITION OF DRIVER',
         'UNDER THE INFLUENCE OF ALCOHOL/DRUGS (USE WHEN ARREST IS EFFECTED)',
         'DRIVING ON WRONG SIDE/WRONG WAY',
@@ -37,6 +36,7 @@ def main():
     environment = [
         'WEATHER',
         'VISION OBSCURED (SIGNS, TREE LIMBS, BUILDINGS, ETC.)',
+        'DISTRACTION - FROM INSIDE VEHICLE',
         'DISTRACTION - FROM OUTSIDE VEHICLE',
         'ROAD ENGINEERING/SURFACE/MARKING DEFECTS',
         'ROAD CONSTRUCTION/MAINTENANCE',
@@ -53,7 +53,7 @@ def main():
     disregarding_signs_dict = dict.fromkeys(disregarding_signs, "DISREGARDING_SIGNS")
     environment_dict = dict.fromkeys(environment, "ENVIRONMENT")
     binned_causes = {**driving_dict, **disregarding_signs_dict, **environment_dict}
-    with open('binned_causes.pkl', 'wb') as f:
+    with open('data/binned_causes.pkl', 'wb') as f:
         pickle.dump(binned_causes, f)
 
 
