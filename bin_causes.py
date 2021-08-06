@@ -1,8 +1,10 @@
 import pickle
+
 """
 This script is for determining the aggregated target values in 'PRIM_CONTRIBUTORY_CAUSE' and saving them as
 a PKL file to be used for the modeling notebooks. It can be run in the terminal from the root directory.
 """
+
 
 def main():
     driving = [
